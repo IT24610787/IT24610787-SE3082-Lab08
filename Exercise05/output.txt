@@ -1,0 +1,31 @@
+=== Part 1, mode 1: rank 0 sends to rank 2, rank 1 waits for rank 0 ===
+Process 1 waiting for a message from rank 0
+Process 0 sending 42 to rank 2
+Process 0: MPI_Send returned
+Process 1: nothing arrived from rank 0 after 3 s - a plain MPI_Recv would block forever
+
+=== Part 1, mode 2: rank 0 sends to rank 1, rank 1 waits for rank 2 ===
+Process 0 sending 42 to rank 1
+Process 1 waiting for a message from rank 2
+Process 0: MPI_Send returned
+Process 1: nothing arrived from rank 2 after 3 s - a plain MPI_Recv would block forever
+Abort(807528207) on node 1: Fatal error in internal_Finalize: Other MPI error, error stack:
+internal_Finalize(50)...........: MPI_Finalize failed
+MPII_Finalize(440)..............: 
+MPIR_finalize_builtin_comms(137): 
+MPIR_Comm_delete_internal(1212).: Communicator (handle=44000000) being freed has 1 unmatched message(s)
+
+=== Part 1, mode 3: rank 0 sends to rank 5, which does not exist (expect an MPI error) ===
+Process 0 sending 42 to rank 5
+Process 1 waiting for a message from rank 0
+Abort(671795206) on node 0 (rank 0 in comm 0): Fatal error in internal_Send: Invalid rank, error stack:
+internal_Send(126): MPI_Send(buf=0x16b87e958, count=1, MPI_INT, 5, 0, MPI_COMM_WORLD) failed
+internal_Send(78).: Invalid rank has value 5 but must be nonnegative and less than 2
+
+=== Part 2: message2 rewritten with MPI_Bsend ===
+Process 0 sent 0
+Process 0 sent 10
+Process 0 sent 20
+Process 1 received 0
+Process 1 received 10
+Process 1 received 20

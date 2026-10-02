@@ -1,0 +1,11 @@
+Replacing MPI_Send with MPI_Bsend in the workers gave the same hit counts and the same estimate
+of Pi as Exercise 6 for 1, 2, 4 and 8 processes. Rank 0 still received with MPI_ANY_SOURCE, so
+results still arrived in varying order (e.g. 2,3,7,4,1,5,6 for 8 processes).
+
+MPI_Bsend copies the message into a buffer attached with MPI_Buffer_attach and returns
+immediately, so the sender does not wait for rank 0 to receive. The buffer has to be large
+enough for all pending messages (message size + MPI_BSEND_OVERHEAD each), and is detached at
+the end, which waits until buffered messages are delivered.
+
+Execution times were essentially the same as Exercise 6 (ratios between 0.94 and 1.08), because
+each worker sends only a single integer, so the send mode has very little effect on total time.

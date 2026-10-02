@@ -1,0 +1,11 @@
+Changing the receive on rank 0 to MPI_ANY_SOURCE gave the same hit counts and the same estimate
+of Pi as the original program (Exercise 3) for 1, 2, 4 and 8 processes, because the total is the
+sum of the workers' counts and does not depend on the order in which they are added.
+
+The difference is the order of reception: with MPI_ANY_SOURCE rank 0 accepts results in the
+order the workers finish (e.g. 2,1,3 for 4 processes) instead of the fixed order 1,2,3. This
+avoids rank 0 waiting on a slow low-numbered worker while others are already done.
+
+Execution times were similar (ratios between 0.93 and 1.16 against Exercise 3), with no
+consistent difference. The workers only send one integer each, so the receive order has very
+little effect on the total time.

@@ -1,0 +1,13 @@
+When the destination of MPI_Send does not match the source expected by MPI_Recv, the receive
+never finds a matching message. A plain MPI_Recv then blocks forever, so the program hangs
+(deadlock). In my demo the receiver used MPI_Irecv/MPI_Test with a 3 s timeout so it could
+report this instead of hanging.
+
+The sender is not affected: for a small message (one int) MPI_Send returned normally even
+though nobody received the message. This depends on the MPI implementation buffering small
+messages and is not guaranteed for larger messages.
+
+In mode 2, MPICH also aborted in MPI_Finalize reporting 1 unmatched message, because the
+message sent to rank 1 was never received. If the destination rank does not exist (mode 3,
+rank 5 with 2 processes), MPI_Send fails immediately with an "Invalid rank" error and the
+job aborts.

@@ -1,0 +1,12 @@
+Hello World! From rank 0 machine Gunithas-MacBook-Pro.local
+Just a normal process From rank 1 machine Gunithas-MacBook-Pro.local
+Just a normal process From rank 2 machine Gunithas-MacBook-Pro.local
+Just a normal process From rank 3 machine Gunithas-MacBook-Pro.local
+Process 1 received 42
+Process 0 sent 42
+Process 0 sent 0
+Process 0 sent 10
+Process 0 sent 20
+Process 1 received 0
+Process 1 received 10
+Process 1 received 20
